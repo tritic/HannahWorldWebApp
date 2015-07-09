@@ -52,9 +52,17 @@ public class WordController {
 	
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
 	public ModelAndView editWordPage(@PathVariable Integer id) {
-		ModelAndView mav = new ModelAndView("word-edit");
+		ModelAndView mav;
 		Word word = wordService.findById(id);
+		if(word==null){
+			new WordNotFound(""+id);
+			mav = new ModelAndView("");			
+	        mav.setViewName("error/404");    
+		}
+		else {
+		mav = new ModelAndView("word-edit");
 		mav.addObject("word", word);
+		}
 		return mav;
 	}
 	
@@ -62,12 +70,12 @@ public class WordController {
 	public ModelAndView editWord(@ModelAttribute Word word,
 			@PathVariable Integer id,
 			final RedirectAttributes redirectAttributes) throws WordNotFound {
-		
+
 		ModelAndView mav = new ModelAndView("redirect:/index.html");
 		String message = "Word was successfully updated.";
 
 		wordService.update(word);
-		
+
 		redirectAttributes.addFlashAttribute("message", message);	
 		return mav;
 	}

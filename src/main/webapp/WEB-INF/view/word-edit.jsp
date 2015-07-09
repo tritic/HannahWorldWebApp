@@ -17,7 +17,7 @@
 <td><form:input path="aword" /></td>
 </tr>
 <tr>
-<td>Employees number:</td>
+<td>Week number:</td>
 <td><form:input path="weekNumber" /></td>
 </tr>
 <tr>
